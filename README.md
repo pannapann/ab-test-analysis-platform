@@ -6,21 +6,21 @@ This repository contains a Streamlit app for tracking and analyzing A/B tests. T
 
 The app supports the following features:
 
-Upload A/B test data in CSV format
-Select columns for date, group, and target
-Calculate effect size for t-test, proportional z-test, chi-square test, or Mann-Whitney U test
-Calculate required sample size for given test type, effect size, power, and significance level
-Estimate number of days needed to collect required sample size for given test type, effect size, power, and significance level
-Perform statistical tests and display results
-Perform Bayesian analysis
-Plot target by date
-Plot target by segment
-Plot statistical significance
-Check A/B group bias
-Plot cumulative metrics
-Plot metric distributions
-Analyze seasonality
-Plot cumulative target
+- Upload A/B test data in CSV format
+- Select columns for date, group, and target
+- Calculate effect size for t-test, proportional z-test, chi-square test, or Mann-Whitney U test
+- Calculate required sample size for given test type, effect size, power, and significance level
+- Estimate number of days needed to collect required sample size for given test type, effect size, power, and significance level
+- Perform statistical tests and display results
+- Perform Bayesian analysis
+- Plot target by date
+- Plot target by segment
+- Plot statistical significance
+- Check A/B group bias
+- Plot cumulative metrics
+- Plot metric distributions
+- Analyze seasonality
+- Plot cumulative target
 
 
 ### Installation
