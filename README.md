@@ -2,6 +2,9 @@
 
 This repository contains a Streamlit app for tracking and analyzing A/B tests. The app allows users to upload their A/B test data in CSV format and provides an interactive interface for analyzing the data, calculating effect sizes, required sample sizes, and performing various statistical tests.
 
+## Demo
+https://youtu.be/L021DyIxJfw
+
 ## Features
 
 The app supports the following features:
