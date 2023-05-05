@@ -27,7 +27,7 @@ The app supports the following features:
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/ab-test-tracking.git
+git clone https://github.com/pannapann/ab-test-analysis-platform
 ```
 
 2. Change to the repository directory:
