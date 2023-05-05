@@ -151,12 +151,11 @@ class ABtestTrackingClass:
             float: The number of days needed to collect the required sample size.
         """
         
-        required_sample_size = self.calculate_required_sample_size(test_type, effect_size, power, alpha)
-        current_sample_size = len(self.dataframe)
+        required_sample_size = int(self.calculate_required_sample_size(test_type, effect_size, power, alpha))
+        current_sample_size = int(len(self.dataframe))
 
         st.write(f"Current sample size: {current_sample_size}")
         st.write(f"Required sample size: {required_sample_size}")
-
         if current_sample_size >= required_sample_size:
             st.write("The current sample size is enough.")
             return 0
@@ -177,7 +176,8 @@ class ABtestTrackingClass:
         """
         
         # Check if the target column is numeric or categorical
-        if np.issubdtype(self.dataframe[self.target_column].dtype, np.number):
+        if (np.issubdtype(self.dataframe[self.target_column].dtype, np.number)) and (self.dataframe[self.target_column].nunique() != 2):
+
             # If numeric, check if the data is normally distributed
             group_a = self.dataframe[self.dataframe[self.group_column] == self.group_a][self.target_column]
             group_b = self.dataframe[self.dataframe[self.group_column] == self.group_b][self.target_column]
@@ -191,7 +191,7 @@ class ABtestTrackingClass:
                 return 't_test'
             else:
                 # If not normally distributed, use Mann-Whitney U test
-                return 'mann_whitney_u_test'
+                return 'mann_whitney_u'
         else:
             # If categorical, check if the categories are binary
             unique_categories = self.dataframe[self.target_column].nunique()
@@ -1007,25 +1007,25 @@ class ABtestTrackingClass:
         st.plotly_chart(fig, use_container_width=True)
         
     
-    def plot_cumulative_target(self, test_type='proportional'):
+    def plot_cumulative_target(self, test_type='proportion_based'):
         """
         Plot the cumulative target (conversion rate or mean) over time for both groups (A and B).
 
         This function generates a line plot of the cumulative target for each group over time, allowing users to visualize the performance of the test and control groups throughout the A/B test. The target is calculated as the cumulative sum of conversions or values divided by the cumulative count of observations for each group, depending on the test_type parameter.
         """
 
-        if test_type not in ['proportional', 'mean']:
-            raise ValueError("test_type must be either 'proportional' or 'mean'")
+        if test_type not in ['proportion_based', 'mean_based']:
+            raise ValueError("test_type must be either 'proportion_based' or 'mean_based'")
 
         # Group the data by date and group_column, and calculate the cumulative sum
         cumulative_data = self.dataframe.groupby([self.date_column, self.group_column])[self.target_column].agg(['sum', 'count']).reset_index()
         cumulative_data['cumulative_sum'] = cumulative_data.groupby(self.group_column)['sum'].cumsum()
         cumulative_data['cumulative_count'] = cumulative_data.groupby(self.group_column)['count'].cumsum()
         
-        if test_type == 'proportional':
+        if test_type == 'proportion_based':
             cumulative_data['cumulative_target'] = cumulative_data['cumulative_sum'] / cumulative_data['cumulative_count']
             metric_title = 'Cumulative Conversion Rate'
-        else: # test_type == 'mean'
+        else: # test_type == 'mean_based'
             cumulative_data['cumulative_target'] = cumulative_data['cumulative_sum'] / cumulative_data['cumulative_count']
             metric_title = 'Cumulative Mean'
 
